@@ -448,23 +448,32 @@ class Example(Frame):
         if len(apellidos)<3 :
             error = error + "Apellidos debe tener mas de 2 caracteres\n"
             guarda = False
-            17764662
 
         if len(dni)==9 and dni[8].isalpha() and dni[0-7].isdigit():
             error = error + "Dni tiene el formato NNNNNNNNX donde N es un digito y X una letra \n"
             guarda = False
 
-        if len(telefono_1)==0:
-            telefono_1=0
+        if len(direccion)==0:
+            error = error + "Introduzca una Dirección \n"
+            guarda = False
+
+        if len(correo_electronico)<5:
+            error = error + "Introduzca una dirección de correo valida \n"
+            guarda = False
+
+
+        if len(telefono_1)<9:
+            error = error + "Introduzca un numero valido \n"
+            guarda = False
 
         if len(telefono_1)==0:
             telefono_1=0
 
         if guarda:self.nuevoVoluntario(nombre, apellidos, dni, direccion, correo_electronico, localidad_id, estudio_id,
                         parroquial_id, proyecto_id, telefono_1, telefono_2, genero, fecha_nacimiento,t,estado,id)
-
-
-
+        # añadir el error
+        else:
+            print error
 
     def ventanaImprimir(self):
         t = Toplevel(self)

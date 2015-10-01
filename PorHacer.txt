@@ -1,5 +1,7 @@
 - Crear Tablas (Bases de Datos)
 - Ventana de Inicio
 - Quitar elementos en la lista [Fixed]
+- Guardas de datos
 - Estilos
 - Depuración
+- Añadir campos obligatorios
