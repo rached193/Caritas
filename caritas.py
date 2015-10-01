@@ -495,7 +495,7 @@ class Example(Frame):
         valores = {}
         i=1
         for values in arrayListado:
-            if numero-1 !=i:
+            if numero+1 != i:
                 valores['row',i]=arrayListado['row',i]
             i+=1
         modelNuevo.importDict(valores)
