@@ -424,12 +424,46 @@ class Example(Frame):
 
 
 
-        button5 = Button(t, text="Guardar", command=lambda: self.nuevoVoluntario(entradaNombre.get(),entradaApellidos.get(),entradaDNI.get(),entradaDireccion.get(),
-                                                                                 entradaCorreo.get(),1,self.listadoEstudios[1][self.selectorEstudios.current()],self.listadoParroquial[1][self.selectorParroquial.current()],1,entradaTelefono1.get(),entradaTelefono2.get(),"M","2001-01-01",t,guardar,id))
+        button5 = Button(t, text="Guardar", command=lambda: self.nuevoVoluntario(entradaNombre.get(),
+                                                                                 entradaApellidos.get(),entradaDNI.get(),entradaDireccion.get(),
+                                                                                 entradaCorreo.get(),1,self.listadoEstudios[1][self.selectorEstudios.current()],
+                                                                                 self.listadoParroquial[1][self.selectorParroquial.current()],
+                                                                                 1,entradaTelefono1.get(),entradaTelefono2.get(),"M","2001-01-01",t,guardar,id))
         button6 = Button(t, text="Cancelar", command=t.destroy)
 
         button5.grid(row=7, column=4)
         button6.grid(row=7, column=5)
+
+
+    def validarVoluntario(self, nombre, apellidos, dni, direccion, correo_electronico, localidad_id, estudio_id,
+                        parroquial_id, proyecto_id, telefono_1, telefono_2, genero, fecha_nacimiento,t,estado,id):
+
+        guarda = True
+        error = ""
+
+        if len(nombre)<3 :
+            error = error + "Nombre debe tener mas de 2 caracteres\n"
+            guarda = False
+
+        if len(apellidos)<3 :
+            error = error + "Apellidos debe tener mas de 2 caracteres\n"
+            guarda = False
+            17764662
+
+        if len(dni)==9 and dni[8].isalpha() and dni[0-7].isdigit():
+            error = error + "Dni tiene el formato NNNNNNNNX donde N es un digito y X una letra \n"
+            guarda = False
+
+        if
+
+
+
+
+
+        if guarda:self.nuevoVoluntario(nombre, apellidos, dni, direccion, correo_electronico, localidad_id, estudio_id,
+                        parroquial_id, proyecto_id, telefono_1, telefono_2, genero, fecha_nacimiento,t,estado,id)
+
+
 
 
     def ventanaImprimir(self):
