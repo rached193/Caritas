@@ -454,11 +454,11 @@ class Example(Frame):
             error = error + "Dni tiene el formato NNNNNNNNX donde N es un digito y X una letra \n"
             guarda = False
 
-        if
+        if len(telefono_1)==0:
+            telefono_1=0
 
-
-
-
+        if len(telefono_1)==0:
+            telefono_1=0
 
         if guarda:self.nuevoVoluntario(nombre, apellidos, dni, direccion, correo_electronico, localidad_id, estudio_id,
                         parroquial_id, proyecto_id, telefono_1, telefono_2, genero, fecha_nacimiento,t,estado,id)
