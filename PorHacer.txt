@@ -1,0 +1,5 @@
+- Crear Tablas (Bases de Datos)
+- Ventana de Inicio
+- Quitar elementos en la lista
+- Estilos
+- Depuración
