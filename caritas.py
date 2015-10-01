@@ -720,6 +720,94 @@ def conectar():
         return cnx
 
 
+def crearBD():
+    global cnx
+    cursor = cnx.cursor()
+    queryCrear = "`caritas`.CREATE DATABASE `caritas` /*!40100 DEFAULT CHARACTER SET utf8 */"
+    cursor.execute(queryCrear)
+    queryEstudio = ("""DROP TABLE IF EXISTS 'caritas'.'estudio';
+                      CREATE TABLE  'caritas'.'estudio' (
+                      'id' int(10) unsigned NOT NULL auto_increment,
+                       'nombre' varchar(50) NOT NULL,
+                        PRIMARY KEY  ('id'),
+                        UNIQUE KEY 'nombre' ('nombre')
+                        ) ENGINE='InnoDB' DEFAULT CHARSET='utf8'""")
+
+    cursor.execute(queryEstudio)
+
+    queryPais="""DROP TABLE IF EXISTS 'caritas'.'pais';
+CREATE TABLE  'caritas'.'pais' (
+  'id' int(10) unsigned NOT NULL auto_increment,
+  'nombre' varchar(50) NOT NULL,
+  PRIMARY KEY  ('id'),
+  UNIQUE KEY 'nombre' ('nombre')
+) ENGINE='InnoDB' DEFAULT CHARSET='utf8'"""
+
+    cursor.execute(queryPais);
+
+    queryLocalidad = """DROP TABLE IF EXISTS 'caritas'.'localidad';
+CREATE TABLE  'caritas'.'localidad' (
+  'id' int(10) unsigned NOT NULL auto_increment,
+  'nombre' varchar(50) NOT NULL,
+  'nacionalidad_id' int(10) unsigned NOT NULL,
+  PRIMARY KEY  ('id'),
+  UNIQUE KEY 'nombre' ('nombre','nacionalidad_id'),
+  KEY 'FK_localidad_nacionalidad' ('nacionalidad_id'),
+  CONSTRAINT 'FK_localidad_nacionalidad' FOREIGN KEY ('nacionalidad_id') REFERENCES 'pais' ('id')
+) ENGINE='InnoDB' DEFAULT CHARSET='utf8'"""
+
+    cursor.execute(queryLocalidad)
+
+    queryParroquial = """DROP TABLE IF EXISTS 'caritas'.'parroquial';
+CREATE TABLE  'caritas'.'parroquial' (
+  'id' int(10) unsigned NOT NULL auto_increment,
+  'nombre' varchar(50) NOT NULL,
+  PRIMARY KEY  ('id')
+) ENGINE='InnoDB' DEFAULT CHARSET='utf8'"""
+
+    cursor.execute(queryParroquial)
+
+
+    queryProyecto = """DROP TABLE IF EXISTS 'caritas'.'proyecto';
+CREATE TABLE  'caritas'.'proyecto' (
+  'id' int(10) unsigned NOT NULL auto_increment,
+  'nombre' varchar(50) NOT NULL,
+  PRIMARY KEY  ('id')
+) ENGINE='InnoDB' DEFAULT CHARSET='utf8'"""
+
+    cursor.execute(queryProyecto)
+
+
+    queryVoluntaro ="""DROP TABLE IF EXISTS 'caritas'.'voluntario';
+CREATE TABLE  'caritas'.'voluntario' (
+  'id' int(10) unsigned NOT NULL auto_increment,
+  'nombre' varchar(50) NOT NULL,
+  'apellidos' varchar(50) NOT NULL,
+  'dni' varchar(9) NOT NULL,
+  'direccion' varchar(100) NOT NULL,
+  'correo_electronico' varchar(100) NOT NULL,
+  'localidad_id' int(10) unsigned NOT NULL,
+  'estudio_id' int(10) unsigned NOT NULL,
+  'parroquial_id' int(10) unsigned NOT NULL,
+  'proyecto_id' int(10) unsigned NOT NULL,
+  'telefono_1' bigint(20) unsigned NOT NULL,
+  'telefono_2' bigint(20) unsigned NOT NULL,
+  'genero' char(1) NOT NULL COMMENT 'M or F',
+  'fecha_nacimiento' date NOT NULL,
+  PRIMARY KEY  ('id'),
+  UNIQUE KEY 'dni' ('dni'),
+  KEY 'FK_voluntario_localidad' ('localidad_id'),
+  KEY 'FK_voluntario_estudio' ('estudio_id'),
+  KEY 'FK_voluntario_parroquial' ('parroquial_id'),
+  KEY 'FK_voluntario_proyecto' ('proyecto_id'),
+  CONSTRAINT 'FK_voluntario_estudio' FOREIGN KEY ('estudio_id') REFERENCES 'estudio' ('id'),
+  CONSTRAINT 'FK_voluntario_localidad' FOREIGN KEY ('localidad_id') REFERENCES 'localidad' ('id'),
+  CONSTRAINT 'FK_voluntario_parroquial' FOREIGN KEY ('parroquial_id') REFERENCES 'parroquial' ('id'),
+  CONSTRAINT 'FK_voluntario_proyecto' FOREIGN KEY ('proyecto_id') REFERENCES 'proyecto' ('id')
+) ENGINE='InnoDB' DEFAULT CHARSET='utf8'"""
+
+    cursor.execute(queryVoluntaro)
+
 def queryAllVoluntarios():
     global cnx
     cursor = cnx.cursor(dictionary=True)
@@ -734,7 +822,6 @@ def queryAllVoluntarios():
            JOIN parroquial pr
             ON v.proyecto_id = pr.id
 """)
-
 
     cursor.execute(query)
     valores = {}
