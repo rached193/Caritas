@@ -489,6 +489,20 @@ class Example(Frame):
         modelNuevo.addColumn("telefono_1")
         modelNuevo.addColumn("telefono_2")
 
+        print numero
+
+        arrayListado = self.selectTable.getModel().data
+        valores = {}
+        i=1
+        for values in arrayListado:
+            if numero-1 !=i:
+                valores['row',i]=arrayListado['row',i]
+            i+=1
+        modelNuevo.importDict(valores)
+
+        self.selectTable.updateModel(modelNuevo)
+        self.selectTable.redrawTable()
+
     def imprimir(self,numero,label):
         pdf = fpdf.FPDF(format='letter')
         pdf.add_page()
